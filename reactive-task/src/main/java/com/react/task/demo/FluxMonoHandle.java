@@ -2,6 +2,7 @@ package com.react.task.demo;
 
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Hooks;
 
 import java.util.Locale;
 
@@ -49,7 +50,9 @@ public class FluxMonoHandle {
     }
 
     public Flux<String> doOnErrorHandle(){
+        //Hooks.onOperatorDebug();
         return Flux.just("te","me","yu")
+                .checkpoint("check point 2")
                 .map(s -> {
                     if (s.equals("me")){
                         throw new RuntimeException("The exception") ;
@@ -57,6 +60,7 @@ public class FluxMonoHandle {
                         return s.toUpperCase(Locale.ROOT);
                     }
                 })
+                .checkpoint("check point 1 ")
                 .doOnError(throwable -> {
                     System.out.println("error -> "+ throwable.getMessage());
                 });
