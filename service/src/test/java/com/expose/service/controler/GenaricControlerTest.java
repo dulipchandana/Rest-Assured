@@ -1,6 +1,7 @@
 package com.expose.service.controler;
 
-import com.expose.service.CommonModelService;
+import com.expose.service.service.CommonModelService;
+import com.expose.service.dao.EmployeeModalDao;
 import com.expose.service.modal.CommonModal;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.hamcrest.Matchers;
@@ -25,6 +26,9 @@ class GenaricControlerTest {
 
     @MockBean
     private CommonModelService commonModelService;
+
+    @MockBean
+    private EmployeeModalDao empModalDao;
 
     @Autowired
     private MockMvc mockMvc;

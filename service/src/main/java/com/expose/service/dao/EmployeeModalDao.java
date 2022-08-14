@@ -15,7 +15,7 @@ public class EmployeeModalDao {
     @Autowired
     FeignClientUtil feignClientUtil;
 
-    public Optional<EmployeeModal> getEmployeeList(){
+    public Optional<EmployeeModal> getEmployeeList() {
         return Optional.of(feignClientUtil.getEmployeeModalList());
     }
 }

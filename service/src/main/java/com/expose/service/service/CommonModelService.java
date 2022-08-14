@@ -1,4 +1,4 @@
-package com.expose.service;
+package com.expose.service.service;
 
 import com.expose.service.modal.CommonModal;
 import org.springframework.stereotype.Service;

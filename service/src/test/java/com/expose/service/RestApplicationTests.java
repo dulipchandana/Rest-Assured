@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -121,6 +122,30 @@ class RestApplicationTests {
     }
 
     @Test
+    void getEmpModalTestError(){
+        wireMockServer.stubFor(
+                WireMock.get("/api/v1/employees")
+                        .willReturn(aResponse()
+                                .withHeader(HttpHeaders.CONTENT_TYPE,
+                                        MediaType.APPLICATION_JSON_VALUE)
+                                        .withStatus(400)
+                                )
+        );
+
+        ExtractableResponse<Response> response = RestAssured
+                .given()
+                .auth().preemptive().basic("dulip", "pw")
+                .contentType("application/json")
+                .when()
+                .get("http://localhost:" + port + "/api/modalmgt/employee/modals")
+                .then()
+                .statusCode(400)
+                .extract();
+        EmployeeModal responseModal =  response.body().as(EmployeeModal.class);
+        assertTrue(responseModal.status.equals(HttpStatus.BAD_REQUEST.toString()));
+    }
+
+    @Test
     void testGetModalTest() {
 
         ExtractableResponse<Response> response = RestAssured
@@ -154,7 +179,7 @@ class RestApplicationTests {
                 .statusCode(201)
                 .extract();
         CommonModal returnedmodal = response.body().as(CommonModal.class);
-        assertTrue(returnedmodal.getCommonIndex()==3);
+        assertTrue(returnedmodal.getCommonIndex()==1);
 
     }
 

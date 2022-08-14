@@ -1,10 +1,9 @@
 package com.expose.service.controler;
 
-import com.expose.service.CommonModelService;
+import com.expose.service.service.CommonModelService;
 import com.expose.service.dao.EmployeeModalDao;
 import com.expose.service.modal.CommonModal;
 import com.expose.service.modal.EmployeeModal;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

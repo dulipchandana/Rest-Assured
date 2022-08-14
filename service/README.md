@@ -1,0 +1,1 @@
+This project contains wiremock configurations and wiremock testing .
