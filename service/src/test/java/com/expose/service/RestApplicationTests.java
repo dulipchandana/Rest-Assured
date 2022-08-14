@@ -21,7 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
@@ -108,6 +108,7 @@ class RestApplicationTests {
                                                 "}"))
         );
 
+
         ExtractableResponse<Response> response = RestAssured
                 .given()
                 .auth().preemptive().basic("dulip", "pw")
@@ -119,6 +120,32 @@ class RestApplicationTests {
                 .extract();
         EmployeeModal responseModal =  response.body().as(EmployeeModal.class);
         assertTrue(responseModal.getData().size()==4);
+
+
+    }
+
+    @Test
+    void getEmpModalTestError(){
+        wireMockServer.stubFor(
+                WireMock.get("/api/v1/employees")
+                        .willReturn(aResponse()
+                                .withHeader(HttpHeaders.CONTENT_TYPE,
+                                        MediaType.APPLICATION_JSON_VALUE)
+                                        .withStatus(400)
+                                )
+        );
+
+        ExtractableResponse<Response> response = RestAssured
+                .given()
+                .auth().preemptive().basic("dulip", "pw")
+                .contentType("application/json")
+                .when()
+                .get("http://localhost:" + port + "/api/modalmgt/employee/modals")
+                .then()
+                .statusCode(400)
+                .extract();
+        EmployeeModal responseModal =  response.body().as(EmployeeModal.class);
+        assertTrue(responseModal.status.equals(HttpStatus.BAD_REQUEST.toString()));
     }
 
     @Test
