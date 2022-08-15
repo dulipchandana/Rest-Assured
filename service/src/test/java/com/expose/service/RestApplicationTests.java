@@ -147,31 +147,6 @@ class RestApplicationTests {
         EmployeeModal responseModal =  response.body().as(EmployeeModal.class);
         assertTrue(responseModal.status.equals(HttpStatus.BAD_REQUEST.toString()));
     }
-
-    @Test
-    void getEmpModalTestError(){
-        wireMockServer.stubFor(
-                WireMock.get("/api/v1/employees")
-                        .willReturn(aResponse()
-                                .withHeader(HttpHeaders.CONTENT_TYPE,
-                                        MediaType.APPLICATION_JSON_VALUE)
-                                        .withStatus(400)
-                                )
-        );
-
-        ExtractableResponse<Response> response = RestAssured
-                .given()
-                .auth().preemptive().basic("dulip", "pw")
-                .contentType("application/json")
-                .when()
-                .get("http://localhost:" + port + "/api/modalmgt/employee/modals")
-                .then()
-                .statusCode(400)
-                .extract();
-        EmployeeModal responseModal =  response.body().as(EmployeeModal.class);
-        assertTrue(responseModal.status.equals(HttpStatus.BAD_REQUEST.toString()));
-    }
-
     @Test
     void testGetModalTest() {
 
