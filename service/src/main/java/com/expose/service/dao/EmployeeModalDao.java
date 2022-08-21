@@ -1,5 +1,6 @@
 package com.expose.service.dao;
 
+import com.expose.service.modal.Employee;
 import com.expose.service.modal.EmployeeModal;
 import com.expose.service.util.FeignClientUtil;
 import com.fasterxml.jackson.databind.util.JSONPObject;
@@ -17,5 +18,9 @@ public class EmployeeModalDao {
 
     public Optional<EmployeeModal> getEmployeeList() {
         return Optional.of(feignClientUtil.getEmployeeModalList());
+    }
+
+    public Optional<Employee> getEmployeeModalByEmployeeId(Integer employeeId) {
+        return Optional.of(feignClientUtil.getEmployeeModalByEmployeeId(employeeId));
     }
 }

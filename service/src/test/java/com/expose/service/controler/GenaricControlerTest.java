@@ -57,7 +57,7 @@ class GenaricControlerTest {
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("$.size()", Matchers.equalTo(2))
-                .body("[0].commonIndex",Matchers.equalTo(2));
+                .body("[0].commonIndex",Matchers.equalTo(1));
     }
 
     @Test
