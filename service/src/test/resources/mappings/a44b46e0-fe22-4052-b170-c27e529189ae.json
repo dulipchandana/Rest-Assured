@@ -1,0 +1,44 @@
+{
+  "mappings": [{
+    "id": "a44b46e0-fe22-4052-b170-c27e529189ae",
+    "request": {
+      "url": "/api/v1/employees",
+      "method": "GET"
+    },
+    "response": {
+      "status": 200,
+      "bodyFileName": "employee.json",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    "uuid": "a44b46e0-fe22-4052-b170-c27e529189ae"
+  },
+    {
+      "id": "a44b46e0-fe22-4052-b170-c27e529189af",
+      "request": {
+        "urlPathPattern": "/api/v1/employee/([1-9]*)",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "status": "success",
+          "data": {
+            "id": "{{request.path.[3]}}",
+            "employee_name": "Tiger Nixon",
+            "employee_salary": 320800,
+            "employee_age": 61,
+            "profile_image": ""
+          },
+          "message": "Successfully! Record has been fetched."
+        },
+        "transformers": ["response-template"],
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "a44b46e0-fe22-4052-b170-c27e529189af"
+    }
+  ]
+}

@@ -6,6 +6,7 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
@@ -13,9 +14,23 @@ import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 
 public class StubApplication {
 
+    @LocalServerPort
+    private Integer port;
 
-    public static void main(String[] arg){
+    @DynamicPropertySource
+    static void overrideRemoteBaseUrl(DynamicPropertyRegistry dr){
+        dr.add("remote.baseUrl",wireMockServer::baseUrl);
+    }
 
+    private static WireMockServer wireMockServer;
+    public static void startStubServer(){
 
+        wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig()
+                .port(8081));
+        wireMockServer.start();
+    }
+
+    public static void stopStubServer(){
+        wireMockServer.stop();
     }
 }
