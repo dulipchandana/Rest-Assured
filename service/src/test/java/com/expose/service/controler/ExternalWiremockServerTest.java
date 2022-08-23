@@ -35,7 +35,7 @@ public class ExternalWiremockServerTest {
 
         @BeforeAll
         static void startStubServer(){
-                StubApplication.startStubServer();
+                StubApplication.main(new String[]{});
         }
         @AfterAll
         static void stopStubServer(){

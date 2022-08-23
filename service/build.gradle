@@ -12,6 +12,13 @@ repositories {
 	mavenCentral()
 }
 
+apply plugin: 'java'
+
+sourceSets {
+	main.java.srcDir 'src/main'
+	test.java.srcDir 'src/test'
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -33,3 +40,17 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+task bootStart (type: JavaExec, dependsOn: classes) {
+	main 'com.expose.service.RestApplication'
+	classpath sourceSets.main.runtimeClasspath
+}
+
+task mockStart (type: JavaExec, dependsOn: classes) {
+	main 'com.expose.service.stub.StubApplication'
+	classpath sourceSets.test.runtimeClasspath
+}
+
+//https://docs.gradle.org/current/dsl/org.gradle.api.Task.html
+
+

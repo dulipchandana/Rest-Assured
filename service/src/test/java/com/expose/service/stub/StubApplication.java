@@ -24,7 +24,7 @@ public class StubApplication {
     }
 
     private static WireMockServer wireMockServer;
-    public static void startStubServer(){
+    public static void main(String[] arg){
 
         wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig()
                 .port(8081)
