@@ -3,6 +3,7 @@ package com.expose.service.stub;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
+import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -26,7 +27,8 @@ public class StubApplication {
     public static void startStubServer(){
 
         wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig()
-                .port(8081));
+                .port(8081)
+                .extensions(new ResponseTemplateTransformer(true)));
         wireMockServer.start();
     }
 

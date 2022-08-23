@@ -1,5 +1,6 @@
 package com.expose.service.controler;
 
+import com.expose.service.modal.Employee;
 import com.expose.service.modal.EmployeeModal;
 import com.expose.service.stub.StubApplication;
 import io.restassured.RestAssured;
@@ -8,6 +9,8 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -52,5 +55,21 @@ public class ExternalWiremockServerTest {
                         .extract();
                 EmployeeModal responseModal =  response.body().as(EmployeeModal.class);
                 assertTrue(responseModal.getData().size()==4);
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints ={1,2,3})
+        void testGetEmployeeById(int empId){
+                ExtractableResponse<Response> response = RestAssured
+                        .given()
+                        .auth().preemptive().basic("dulip", "pw")
+                        .contentType("application/json")
+                        .when()
+                        .get("http://localhost:" + port + "/api/modalmgt/employee/modal/"+empId)
+                        .then()
+                        .statusCode(200)
+                        .extract();
+                Employee responseModal =  response.body().as(Employee.class);
+                assertTrue(responseModal.getData().id == empId);
         }
 }
